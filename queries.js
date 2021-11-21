@@ -19,6 +19,59 @@ const GetUsers = (req, res) => {
   })
 }
 
+const GetUserByID = (req, res) => {
+  pool.query(`SELECT * FROM USERS WHERE ID = $1`, [parseInt(req.params.id)], (error, r) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(r.rows)
+  })
+}
+
+const CreateUser = (req, res) => {
+  const { name, email } = req.body
+  pool.query(`INSERT INTO USERS (NAME, EMAIL) VALUES ($1, $2)`, [name, email], (error, r) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).send(`Added`)
+  })
+}
+
+const UpdateUser = (req, res) => {
+  const id = parseInt(req.params.id)
+  const { name, email } = req.body
+  pool.query(`UPDATE USERS SET NAME = $1, EMAIL = $2 WHERE ID = $3`,[name, email, id],(error, r) => {
+      if (error) {
+        throw error
+      }
+      res.status(200).send(`Modified ID: ${id}`)
+    }
+  )
+}
+
+const DeleteUser = (req, res) => {
+  const id = parseInt(req.params.id)
+  pool.query(`DELETE FROM USERS WHERE ID = $1`, [id], (error, r) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).send(`Deleted ID : ${id}`)
+  })
+}
+
+/**
+ * Message
+ * 
+*/
+
+const GetMessages = (req, res) => {
+  pool.query(`SELECT * FROM MESSAGE ORDER BY ID ASC`, (err, r)=>{
+    if (err) { throw err }
+    res.status(200).json(r.rows)
+  })
+}
+
 const GetMessageByID = (req, res) => {
   pool.query(`SELECT * FROM MESSAGE WHERE ID = $1`, [parseInt(req.params.id)], (error, r) => {
     if (error) {
