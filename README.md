@@ -41,4 +41,25 @@
 
    ```
 
-5. raise a star to support me
+CREATE TABLE users(
+id integer PRIMARY KEY,
+name character,
+email character
+)
+
+CREATE TABLE message(
+id integer PRIMARY KEY,
+body character varying,
+parentid integer,
+senderid integer,
+receiverid integer,
+isread boolean,
+createddate time without time zone
+)
+
+```
+
+5. Import 'thunder-collection_WhatsappApi.json' to postman or vscode
+
+6. Raise a star to support me
+```
